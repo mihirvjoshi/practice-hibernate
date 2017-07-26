@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--  represents 3 tables, one for each concrete class(concrete class here is final class with all properties/fields including those of parent class), 
+	with all columns and descriminator value to identify different type of data (employees here) -->
+<hibernate-mapping>
+	<class name="com.practice.hibernate.employee.Employee" table="employee">
+		<id name="id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="name"></property>
+		<!-- Here tables, reg_emp & cont_emp will have duplicate values from parent class (id, name) -->
+		<union-subclass name="com.practice.hibernate.employee.RegularEmployee" table="reg_emp">
+			<property name="salary"></property>
+			<property name="bonus"></property>
+		</union-subclass>
+		<union-subclass name="com.practice.hibernate.employee.ContractEmployee" table="cont_emp">
+			<property name="pay_per_hour"></property>
+			<property name="contract_duration"></property>
+		</union-subclass>
+	</class>
+</hibernate-mapping>  
